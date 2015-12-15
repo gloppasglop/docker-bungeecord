@@ -1,0 +1,72 @@
+#!/bin/bash
+
+
+BUNGEECORD_HOME=/bungeecord
+TMUX_SESSION=bc
+#
+# TODO Add options
+#
+
+
+if [ ! -f "$BUNGEECORD_HOME/config.yml" ]
+then:q
+player_limit: -1
+ip_forward: false
+permissions:
+  default:
+  - bungeecord.command.server
+  - bungeecord.command.list
+  admin:
+  - bungeecord.command.alert
+  - bungeecord.command.end
+  - bungeecord.command.ip
+  - bungeecord.command.reload
+timeout: 30000
+log_commands: false
+online_mode: true
+servers:
+  lobby:
+    motd: '&1Just another BungeeCord - Forced Host'
+    address: 172.17.0.140:32768
+    restricted: false
+listeners:
+- query_port: 25577
+  motd: '&1Another Bungee server'
+  tab_list: GLOBAL_PING
+  query_enabled: false
+  forced_hosts:
+    pvp.md-5.net: pvp
+  ping_passthrough: false
+  default_server: lobby
+  bind_local_address: true
+  fallback_server: lobby
+  host: 0.0.0.0:25565
+  max_players: 1
+  tab_size: 60
+  force_default_server: false
+disabled_commands:
+- disabledcommandhere
+network_compression_threshold: 256
+groups:
+  md_5:
+  - admin
+connection_throttle: 4000
+stats: 92b2a01f-2603-4336-af99-783549ab894b
+start() {
+  tmux new -s $TMUX_SESSION "java -Xmx512M -jar $BUNGEECORD_HOME/BungeeCord.jar"
+}
+
+stop() {
+  tmux send -t $TMUX_SESSION "alert SERVER SHUTTING DOWN..." END
+  sleep 5
+  tmux send -t $TMUX_SESSION "end" END
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+esac
