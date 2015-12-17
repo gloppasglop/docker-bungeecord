@@ -9,7 +9,8 @@ TMUX_SESSION=bc
 
 
 if [ ! -f "$BUNGEECORD_HOME/config.yml" ]
-then:q
+then
+cat <<EOF > $BUNGEECORD_HOME/config.yml
 player_limit: -1
 ip_forward: false
 permissions:
@@ -52,6 +53,9 @@ groups:
   - admin
 connection_throttle: 4000
 stats: 92b2a01f-2603-4336-af99-783549ab894b
+EOF
+fi
+
 start() {
   tmux new -s $TMUX_SESSION "java -Xmx512M -jar $BUNGEECORD_HOME/BungeeCord.jar"
 }
