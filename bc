@@ -8,6 +8,7 @@ TMUX_SESSION=bc
 #
 
 
+
 if [ ! -f "$BUNGEECORD_HOME/config.yml" ]
 then
 cat <<EOF > $BUNGEECORD_HOME/config.yml
@@ -28,7 +29,7 @@ online_mode: true
 servers:
   lobby:
     motd: '&1Just another BungeeCord - Forced Host'
-    address: 172.17.0.140:32768
+    address: hub:25565
     restricted: false
 listeners:
 - query_port: 25577
